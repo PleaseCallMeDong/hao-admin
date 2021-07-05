@@ -1,0 +1,58 @@
+server:
+  servlet:
+    context-path: /api
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+
+#日志
+logging:
+  file:
+    path: log
+
+spring:
+  profiles:
+    active: test
+  application:
+    name: admin
+  output:
+    ansi:
+      enabled: always
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+      enabled: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      ## 最小空闲连接数量
+      minimum-idle: 5
+      ## 连接池最大连接数，默认是10
+      maximum-pool-size: 15
+      ## 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      ## 连接池母子
+      pool-name: HikariCP
+      ## 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      ## 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+
+# token有效期，单位小时
+jwtTimeOut: 6
+startKafka: true

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.modules.sys.dao.mysql.SysRoleMenuDAO">
+
+    <delete id="updateAddressMenu">
+        DELETE
+        from sys_role_menu
+        WHERE id IN (
+            select *
+            from (SELECT srm.id
+                  FROM sys_role_menu srm
+                           LEFT JOIN sys_role sr ON srm.role_id = sr.role_id
+                  WHERE sr.address_info_id = #{addressInfoId}
+                    AND srm.menu_id NOT IN (SELECT menu_id FROM sys_role_menu WHERE role_id = #{roleId})) a
+        )
+    </delete>
+
+    <select id="queryMenuIdList" resultType="java.lang.Long">
+        select srm.menu_id
+        from sys_role_menu srm
+                 left join sys_role sr on srm.role_id = sr.role_id
+        where sr.role_id = #{roleId}
+          and sr.status = 0
+    </select>
+
+</mapper>

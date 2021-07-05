@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.modules.sys.dao.mysql.SysUserDAO">
+
+    <select id="queryUserMenuId" resultType="java.lang.Long">
+        select DISTINCT srm.menu_id
+        from sys_role_menu srm
+        join sys_role sr on srm.role_id = sr.role_id
+        join sys_user_role sur ON srm.role_id = sur.role_id
+        where sur.user_id = #{userId} ANd sr.status = 0
+        <if test="addressInfoId != null and addressInfoId !=''">
+            AND sur.address_info_id = #{addressInfoId}
+        </if>
+    </select>
+
+    <select id="queryAllPerms" resultType="java.lang.String">
+        select DISTINCT sm.perms
+        from sys_menu sm
+        join sys_role_menu srm on sm.menu_id = srm.menu_id
+        join sys_role sr on srm.role_id = sr.role_id
+        join sys_user_role sur ON srm.role_id = sur.role_id
+        where user_id = #{userId} ANd sr.status = 0
+        <if test="addressInfoId != null and addressInfoId !=''">
+            AND sur.address_info_id = #{addressInfoId}
+        </if>
+        and sm.perms is not null
+    </select>
+
+    <select id="userPage" resultType="com.example.modules.sys.dto.SysUserDTO">
+        select sua.user_type,sua.associate_time,su.user_id,su.username,su.name,su.last_login_time,su.mobile from
+        sys_user_address sua
+        join sys_user su on sua.user_id = su.user_id
+        <where>
+            sua.address_info_id = #{form.addressInfoId}
+            <if test="form.name != null and form.name !=''">
+                and su.name like concat('%',#{form.name},'%')
+            </if>
+            <if test="form.mobile != null and form.mobile != ''">
+                and su.mobile = #{form.mobile}
+            </if>
+            <if test="form.userType !=null">
+                and sua.user_type = #{form.userType}
+            </if>
+        </where>
+        order by user_type desc
+    </select>
+
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+    <!-- 彩色日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <!--日志格式应用spring boot默认的格式，也可以自己更改-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--定义日志存放的位置，默认存放在项目启动的相对路径的目录，在springboot中logging.path默认注入到LOG_PATH中-->
+    <springProperty scope="context" name="LOG_PATH" source="logging.path" defaultValue="log"/>
+    <!--  定义ip,文件名称,文件放置路径(需要引入LogBackConfig类)   -->
+    <!--    <define name="Content" class="com.tdr.config.LogBackConfig"/>-->
+    <!-- 定义日志存放日期最大为30天 -->
+    <property name="maxHistory" value="7"/>
+
+    <property name="totalSizeCap" value="500MB"/>
+
+    <property name="maxFileSize" value="32MB"/>
+
+    <!-- ****************************************************************************************** -->
+    <!-- ****************************** 本地开发只在控制台打印日志 ******************************** -->
+    <!-- ****************************************************************************************** -->
+    <springProfile name="test">
+
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+                <charset>utf8</charset>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+        </root>
+
+        <!--各个服务的包在本地执行的时候，打开debug模式-->
+        <logger name="cn.stylefeng" level="debug" additivity="false">
+            <appender-ref ref="STDOUT"/>
+        </logger>
+
+    </springProfile>
+
+    <!-- ********************************************************************************************** -->
+    <!-- ****                            放到服务器上保存日志文件                                  **** -->
+    <!-- ********************************************************************************************** -->
+    <springProfile name="!test">
+
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+                <charset>utf8</charset>
+            </encoder>
+        </appender>
+
+        <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/error/error-%i.log</fileNamePattern>
+                <maxHistory>${maxHistory}</maxHistory>
+                <totalSizeCap>${totalSizeCap}</totalSizeCap>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>${maxFileSize}</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            </rollingPolicy>
+
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>WARN</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/warn/warn-%i.log</fileNamePattern>
+                <maxHistory>${maxHistory}</maxHistory>
+                <totalSizeCap>${totalSizeCap}</totalSizeCap>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>${maxFileSize}</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            </rollingPolicy>
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/info/info-%i.log</fileNamePattern>
+                <maxHistory>${maxHistory}</maxHistory>
+                <totalSizeCap>${totalSizeCap}</totalSizeCap>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>${maxFileSize}</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            </rollingPolicy>
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>DEBUG</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/debug/debug-%i.log</fileNamePattern>
+                <maxHistory>${maxHistory}</maxHistory>
+                <totalSizeCap>${totalSizeCap}</totalSizeCap>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>${maxFileSize}</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            </rollingPolicy>
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>TRACE</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/trace/trace-%i.log</fileNamePattern>
+                <maxHistory>${maxHistory}</maxHistory>
+                <totalSizeCap>${totalSizeCap}</totalSizeCap>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>${maxFileSize}</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            </rollingPolicy>
+            <encoder>
+                <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
+            </encoder>
+        </appender>
+
+        <logger name="HikariPool-1 connection adder" level="ERROR"/>
+        <logger name="org.apache.http" level="ERROR"/>
+        <logger name="com.zaxxer.hikari.pool.HikariPool" level="ERROR"/>
+        <logger name="com.datastax.driver.core.Connection" level="ERROR"/>
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="o.s.web.servlet.PageNotFound" level="WARN"/>
+        <logger name="okhttp3.OkHttpClient" level="WARN"/>
+        <!--        <logger name="io.tdr.dataParser" level="INFO"/>-->
+
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="ERROR"/>
+            <appender-ref ref="INFO"/>
+            <appender-ref ref="WARN"/>
+            <appender-ref ref="DEBUG"/>
+            <appender-ref ref="TRACE"/>
+        </root>
+
+    </springProfile>
+
+</configuration>
