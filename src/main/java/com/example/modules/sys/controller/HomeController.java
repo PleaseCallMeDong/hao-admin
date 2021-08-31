@@ -1,9 +1,8 @@
 package com.example.modules.sys.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.common.base.MyResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: dj
@@ -22,6 +21,12 @@ public class HomeController {
     @GetMapping("test1")
     public MyResult test1() {
         return MyResult.ok();
+    }
+
+    @PostMapping("test2")
+    public MyResult test2(@RequestBody Object o) {
+        String data = JSONObject.toJSONString(o);
+        return MyResult.ok(data);
     }
 
 }

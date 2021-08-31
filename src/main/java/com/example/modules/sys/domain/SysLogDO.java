@@ -1,17 +1,10 @@
-/**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
- */
-
 package com.example.modules.sys.domain;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,11 +15,12 @@ import java.util.Date;
  * @author dj
  */
 @Data
-@TableName("sys_log")
+@Document("sys_log")
 public class SysLogDO implements Serializable {
 
-	@TableId
-	private Long id;
+	@Id
+	@JSONField(name = "_id")
+	private String id;
 
 	/**
 	 * 用户id
