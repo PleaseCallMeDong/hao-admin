@@ -2,8 +2,6 @@ package com.example.common.exception;
 
 import com.example.common.base.MyResult;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.BindException;
@@ -47,8 +45,6 @@ public class MyExceptionHandler {
             return MyResult.error("请求类型错误");
         } else if (e instanceof ConstraintViolationException) {
             return MyResult.error("插入数据违反唯一约束");
-        } else if (e instanceof AuthorizationException) {
-            return MyResult.unauthorized("没有权限，请联系管理员授权");
         } else if (e instanceof MaxUploadSizeExceededException) {
             return MyResult.unauthorized("上传文件过大,请重新选择小于 " + fieMaxSize + " 文件上传");
         } else if (e instanceof MethodArgumentNotValidException) {
@@ -57,8 +53,6 @@ public class MyExceptionHandler {
         } else if (e instanceof BindException) {
             BindException exception = (BindException) e;
             return MyResult.error(Objects.requireNonNull(exception.getBindingResult().getFieldError()).getDefaultMessage());
-        } else if (e instanceof UnknownAccountException) {
-            return MyResult.noToken(e.getMessage());
         } else {
             log.error(e.getMessage(), e);
             return MyResult.error("未知异常,请联系管理员");

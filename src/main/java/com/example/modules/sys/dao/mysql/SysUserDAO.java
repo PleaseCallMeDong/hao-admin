@@ -21,14 +21,13 @@ public interface SysUserDAO extends BaseMapper<SysUserDO> {
     /**
      * 查询用户的所有权限
      * @param userId  用户ID
-     * @param addressInfoId
      */
-    List<String> queryAllPerms(Long userId, @Param("addressInfoId") String addressInfoId);
+    List<String> queryAllPerms(Long userId);
+
+    List<String> queryAllRoles(Long userId);
 
     /**
      * 查询用户的所有菜单ID
      */
-    List<Long> queryUserMenuId(@Param("userId") Long userId, @Param("addressInfoId") String addressInfoId);
-
-    Page<SysUserDTO> userPage(Page<SysUserDTO> page, @Param("form") SysUserQueryPageForm form);
+    List<Long> queryAllMenuId(Long userId);
 }

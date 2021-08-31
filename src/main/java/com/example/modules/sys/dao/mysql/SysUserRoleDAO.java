@@ -21,7 +21,7 @@ public interface SysUserRoleDAO extends BaseMapper<SysUserRoleDO> {
      */
     List<Long> queryRoleIdList(Long userId);
 
-    List<SysRoleDO> queryRoleList(@Param("userId") Long userId, @Param("addressInfoId") String addressInfoId);
+    List<SysUserRoleDO> queryRoleList(Long userId);
 
     /**
      * 根据角色ID数组，批量删除

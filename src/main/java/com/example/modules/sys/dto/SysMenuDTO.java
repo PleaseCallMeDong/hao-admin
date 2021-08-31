@@ -1,9 +1,5 @@
 package com.example.modules.sys.dto;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONArray;
-import com.example.modules.sys.domain.SysMenuDO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,9 +28,9 @@ public class SysMenuDTO implements Serializable {
      */
     private Long parentId;
 
-    /**
-     * 父菜单名称
-     */
+//    /**
+//     * 父菜单名称
+//     */
 //    private String parentName;
 
     /**
@@ -73,12 +69,5 @@ public class SysMenuDTO implements Serializable {
     private List<?> list;
 
     private List<Long> parentList;
-
-    public SysMenuDTO(SysMenuDO sysMenuDO) {
-        BeanUtil.copyProperties(sysMenuDO, this);
-        if (StrUtil.isNotBlank(sysMenuDO.getParentArray())) {
-            this.parentList = JSONArray.parseArray(sysMenuDO.getParentArray()).toJavaList(Long.class);
-        }
-    }
 
 }

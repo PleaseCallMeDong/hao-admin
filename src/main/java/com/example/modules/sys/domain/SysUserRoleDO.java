@@ -32,6 +32,4 @@ public class SysUserRoleDO implements Serializable {
     @TableField("role_id")
     private Long roleId;
 
-    private String addressInfoId;
-
 }

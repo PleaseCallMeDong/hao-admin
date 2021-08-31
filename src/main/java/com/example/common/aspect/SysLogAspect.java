@@ -8,7 +8,6 @@ import com.example.modules.sys.dao.mongo.SysLogDAO;
 import com.example.modules.sys.domain.SysLogDO;
 import com.example.modules.sys.domain.SysUserDO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -84,7 +83,7 @@ public class SysLogAspect {
         sysLog.setIp(MyIPUtil.getIpAddr(request));
 
         //用户名
-        SysUserDO user = ((SysUserDO) SecurityUtils.getSubject().getPrincipal());
+        SysUserDO user = null;
         if (null != user) {
             sysLog.setUsername(user.getUsername());
             sysLog.setUserId(user.getUserId() + "");

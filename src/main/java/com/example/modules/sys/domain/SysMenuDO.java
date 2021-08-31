@@ -1,11 +1,12 @@
 package com.example.modules.sys.domain;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author: dj
@@ -19,7 +20,7 @@ public class SysMenuDO implements Serializable {
     /**
      * 菜单ID
      */
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Long menuId;
 
     /**
@@ -30,8 +31,8 @@ public class SysMenuDO implements Serializable {
     /**
      * 父菜单名称
      */
-//    @TableField(exist = false)
-//    private String parentName;
+    @TableField(exist=false)
+    private String parentName;
 
     /**
      * 菜单名称
@@ -63,17 +64,13 @@ public class SysMenuDO implements Serializable {
      */
     private Integer orderNum;
 
-    private Integer invisible;
-
     /**
      * ztree属性
      */
-//    @TableField(exist = false)
-//    private Boolean open;
+    @TableField(exist=false)
+    private Boolean open;
 
-//    @TableField(exist = false)
-//    private List<?> list;
-
-    private String parentArray;
+    @TableField(exist=false)
+    private List<?> list;
 
 }

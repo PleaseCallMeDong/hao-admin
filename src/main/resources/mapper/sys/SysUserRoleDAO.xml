@@ -2,14 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.modules.sys.dao.mysql.SysUserRoleDAO">
 
-    <select id="queryRoleList" resultType="com.example.modules.sys.domain.SysRoleDO">
-        select sr.*
-        from sys_role sr
-        left join sys_user_role sur on sr.role_id = sur.role_id
-        where sur.user_id = #{userId} AND sr.status = 0
-        <if test="addressInfoId != null">
-            AND sr.address_info_id = #{addressInfoId}
-        </if>
+    <select id="queryRoleIdList" resultType="long">
+        select role_id
+        from sys_user_role
+        where user_id = #{value}
     </select>
+
+    <select id="queryRoleList" resultType="com.example.modules.sys.domain.SysUserRoleDO">
+        select *
+        from sys_user_role
+        where user_id = #{value}
+    </select>
+
+    <delete id="deleteBatch">
+        delete from sys_user_role where role_id in
+        <foreach item="roleId" collection="array" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </delete>
 
 </mapper>

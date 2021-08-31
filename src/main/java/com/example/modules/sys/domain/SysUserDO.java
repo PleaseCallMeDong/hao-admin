@@ -2,11 +2,13 @@ package com.example.modules.sys.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.example.common.base.BaseTimeDO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统用户
@@ -24,17 +26,28 @@ public class SysUserDO extends BaseTimeDO implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long userId;
 
+    private Date lastLoginTime;
+
     /**
      * 用户名
      */
-    @TableField(updateStrategy = FieldStrategy.NEVER)
     private String username;
 
     /**
      * 密码
      */
-    @TableField
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    /**
+     * 盐
+     */
+    private String salt;
+
+    /**
+     * 邮箱
+     */
+    private String email;
 
     /**
      * 手机号
@@ -46,25 +59,22 @@ public class SysUserDO extends BaseTimeDO implements Serializable {
      */
     private Integer status;
 
+    /**
+     * 角色ID列表
+     */
+    @TableField(exist=false)
+    private List<Long> roleIdList;
+
 
     /**
-     * 微信openId
+     * 部门ID
      */
-    private String wxOpenId;
+    private Long deptId;
 
     /**
-     * 姓名
+     * 部门名称
      */
-    private String name;
+    @TableField(exist=false)
+    private String deptName;
 
-    private Date lastLoginTime;
-
-    @TableField(exist = false)
-    private String addressInfoId;
-
-    /**
-     * 系统类型: 0:web,1:wx小程序
-     */
-    @TableField(exist = false)
-    private Integer systemType;
 }
