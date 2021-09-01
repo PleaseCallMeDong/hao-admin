@@ -11,9 +11,12 @@ import java.io.Serializable;
  * @description
  */
 @Data
-public class UserPasswordForm implements Serializable {
+public class UserUpdatesPasswordForm implements Serializable {
+
     @NotBlank(message = "原密码不能为空")
     private String password;
+
     @NotBlank(message = "新密码不能为空")
     private String newPassword;
+
 }

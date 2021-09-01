@@ -3,20 +3,19 @@ package com.example.modules.sys.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.common.base.MyResult;
 import com.example.common.constant.SysConstant;
 import com.example.common.exception.MyException;
 import com.example.modules.sys.dao.mysql.SysRoleDAO;
 import com.example.modules.sys.dao.mysql.SysRoleMenuDAO;
 import com.example.modules.sys.dao.mysql.SysUserRoleDAO;
-import com.example.modules.sys.domain.SysDeptDO;
-import com.example.modules.sys.domain.SysRoleDO;
-import com.example.modules.sys.domain.SysRoleMenuDO;
-import com.example.modules.sys.domain.SysUserRoleDO;
+import com.example.modules.sys.domain.*;
 import com.example.modules.sys.dto.SysMenuDTO;
 import com.example.modules.sys.dto.SysRoleDTO;
 import com.example.modules.sys.form.SysRoleForm;
@@ -49,24 +48,19 @@ public class SysRoleService extends ServiceImpl<SysRoleDAO, SysRoleDO> {
     @Resource
     private SysDeptService sysDeptService;
 
-//    public PageUtils queryPage(Map<String, Object> params) {
-//        String roleName = (String)params.get("roleName");
-//
-//        IPage<SysRoleDO> page = this.page(
-//                new Query<SysRoleDO>().getPage(params),
-//                new QueryWrapper<SysRoleDO>()
-//                        .like(StrUtil.isNotBlank(roleName),"role_name", roleName)
-//        );
-//
-//        for(SysRoleDO SysRoleDO : page.getRecords()){
-//            SysDeptDO sysDept = sysDeptService.getById(SysRoleDO.getDeptId());
-//            if(sysDept != null){
-//                SysRoleDO.setDeptName(sysDept.getName());
-//            }
-//        }
-//
-//        return new PageUtils(page);
-//    }
+    public MyResult queryPage(SysRoleQueryPageForm form) {
+        String roleName = form.getRoleName();
+        LambdaQueryWrapper<SysRoleDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StrUtil.isNotBlank(roleName), SysRoleDO::getRoleName, roleName);
+        Page<SysRoleDO> page = this.page(new Page<>(form.getCurrent(), form.getSize()), queryWrapper);
+        for (SysRoleDO SysRoleDO : page.getRecords()) {
+            SysDeptDO sysDept = sysDeptService.getById(SysRoleDO.getDeptId());
+            if (sysDept != null) {
+                SysRoleDO.setDeptName(sysDept.getName());
+            }
+        }
+        return MyResult.page(page);
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public void saveRole(SysRoleDO role) {

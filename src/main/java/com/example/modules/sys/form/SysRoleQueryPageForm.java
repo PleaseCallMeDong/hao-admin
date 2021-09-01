@@ -14,10 +14,9 @@ import javax.validation.constraints.NotBlank;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class SysRoleQueryPageForm extends BasePageForm {
+
     private String roleName;
 
-    @NotBlank(message = "参数错误")
-    private String addressInfoId;
-
     private Integer status;
+
 }

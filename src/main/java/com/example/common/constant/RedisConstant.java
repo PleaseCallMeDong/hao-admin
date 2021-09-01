@@ -8,16 +8,6 @@ package com.example.common.constant;
 public class RedisConstant {
 
     /**
-     * wxAppToken
-     */
-    public static final String KEY_WX_APP_TOKEN = "haoAdmin:wxAppToken:";
-
-    /**
-     * webToken
-     */
-    public static final String KEY_WEB_TOKEN = "haoAdmin:webToken:";
-
-    /**
      * 验证码token
      */
     public static final String KEY_VERIFY_CODE_TOKEN = "haoAdmin:verifyCodeToken:";
@@ -31,22 +21,13 @@ public class RedisConstant {
 
     public static final String KEY_GET_USER_BY_USERNAME = "haoAdmin:getUserByUsername:";
 
-
     /**
      * 找回电话缓存
      */
-    public static final String RETRIEVE_KEY = "sitemisManageV2:retrievekey:";
+    public static final String RETRIEVE_KEY = "haoAdmin:retrievekey:";
 
     public static String getUserByUsernameKey(String username) {
         return KEY_GET_USER_BY_USERNAME + username;
-    }
-
-    public static String getWxAppKey(String username) {
-        return KEY_WX_APP_TOKEN + username;
-    }
-
-    public static String getWebKey(String username) {
-        return KEY_WEB_TOKEN + username;
     }
 
     public static String getKeyVerifyCodeToken(String code) {

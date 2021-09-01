@@ -14,6 +14,7 @@ import java.util.List;
  */
 @Data
 public class SysUserForm {
+
     /**
      * 用户ID
      */
@@ -50,10 +51,6 @@ public class SysUserForm {
      */
     private List<Long> roleIdList;
 
-    /**
-     * 微信openId
-     */
-//    private String wxOpenId;
 
     /**
      * 姓名
@@ -63,7 +60,6 @@ public class SysUserForm {
     private String name;
 
     private String addressInfoId;
-
 
     @NotBlank(groups = Insert.class, message = "验证码不能为空")
     private String verifyCode;
