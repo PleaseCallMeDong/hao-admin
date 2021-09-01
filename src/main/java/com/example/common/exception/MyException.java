@@ -11,7 +11,7 @@ public class MyException extends RuntimeException {
 
     private String msg;
     private int code = 500;
-    private Long timestamp;
+    private final Long timestamp;
 
     public MyException(String msg) {
         super(msg);

@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * @author: dj
  * @create: 2021-08-24 16:47
- * @description:
+ * @description: xss拦截器
  **/
 @WebFilter(urlPatterns = "/*")
 public class XssFilter implements Filter {

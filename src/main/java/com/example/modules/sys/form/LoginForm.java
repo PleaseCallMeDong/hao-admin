@@ -19,16 +19,11 @@ public class LoginForm implements Serializable {
     @NotBlank(message = "密码不能为空")
     private String password;
 
-    @NotBlank(message = "验证码不能为空")
-    private String verifyCode;
+//    @NotBlank(message = "验证码不能为空")
+//    private String verifyCode;
 
-    @NotBlank(message = "验证码不能为空")
-    private String verifyCodeToken;
+//    @NotBlank(message = "验证码不能为空")
+//    private String verifyCodeToken;
 
-    private String openId;
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
 

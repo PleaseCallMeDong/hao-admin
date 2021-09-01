@@ -40,16 +40,6 @@ public class SysUserDO extends BaseTimeDO implements Serializable {
     private String password;
 
     /**
-     * 盐
-     */
-    private String salt;
-
-    /**
-     * 邮箱
-     */
-    private String email;
-
-    /**
      * 手机号
      */
     private String mobile;

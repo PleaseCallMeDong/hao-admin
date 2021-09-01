@@ -2,6 +2,7 @@ package com.example.modules.sys.service;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.modules.sys.dao.mysql.SysUserDAO;
@@ -78,6 +79,14 @@ public class SysUserService extends ServiceImpl<SysUserDAO, SysUserDO> {
         sysUser.setPassword(SecureUtil.md5(newPassword));
         return this.update(sysUser,
                 new QueryWrapper<SysUserDO>().eq("user_id", userId).eq("password", password));
+    }
+
+    public SysUserDO getByUsernameAndPassword(String username, String password) {
+        LambdaQueryWrapper<SysUserDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserDO::getUsername, username);
+        queryWrapper.eq(SysUserDO::getPassword, password);
+        queryWrapper.last("limit 1");
+        return this.getOne(queryWrapper);
     }
 
 

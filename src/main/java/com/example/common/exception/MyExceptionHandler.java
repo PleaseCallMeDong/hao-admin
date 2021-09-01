@@ -1,5 +1,9 @@
 package com.example.common.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
+import cn.hutool.json.JSONException;
 import com.example.common.base.MyResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,6 +49,14 @@ public class MyExceptionHandler {
             return MyResult.error("请求类型错误");
         } else if (e instanceof ConstraintViolationException) {
             return MyResult.error("插入数据违反唯一约束");
+        } else if (e instanceof NotLoginException) {
+            return MyResult.error("token不存在,权限错误");
+        } else if (e instanceof NotRoleException) {
+            return MyResult.error("role不存在,权限错误");
+        } else if (e instanceof NotPermissionException) {
+            return MyResult.error("permission不存在,权限错误");
+        } else if (e instanceof JSONException) {
+            return MyResult.error("json格式错误");
         } else if (e instanceof MaxUploadSizeExceededException) {
             return MyResult.unauthorized("上传文件过大,请重新选择小于 " + fieMaxSize + " 文件上传");
         } else if (e instanceof MethodArgumentNotValidException) {

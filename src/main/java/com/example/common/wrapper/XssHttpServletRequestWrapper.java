@@ -81,7 +81,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     @Override
     public ServletInputStream getInputStream() throws IOException {
         InputStream in = super.getInputStream();
-        StringBuffer body = new StringBuffer();
+        StringBuilder body = new StringBuilder();
         InputStreamReader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
         BufferedReader buffer = new BufferedReader(reader);
         String line = buffer.readLine();
@@ -94,7 +94,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         in.close();
 
         Map<String, Object> map = JSONUtil.parseObj(body.toString());
-        Map<String, Object> resultMap = new HashMap(map.size());
+        Map<String, Object> resultMap = new HashMap<>(map.size());
         for (String key : map.keySet()) {
             Object val = map.get(key);
             if (map.get(key) instanceof String) {
