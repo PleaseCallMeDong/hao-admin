@@ -1,10 +1,6 @@
 package com.example.config;
 
-import cn.dev33.satoken.context.SaHolder;
-import cn.dev33.satoken.filter.SaServletFilter;
 import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
-import com.example.common.base.MyResult;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

@@ -26,6 +26,13 @@ spring:
       max-file-size: 5MB
       max-request-size: 5MB
       enabled: true
+  thymeleaf:
+    enabled: true
+    encoding: utf-8
+    prefix: classpath:/templates/
+    cache: false
+    mode: HTML5
+    suffix: .html
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource

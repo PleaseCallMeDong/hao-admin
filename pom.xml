@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.4</version>
+        <version>2.5.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
@@ -23,10 +23,10 @@
         <java.version>1.8</java.version>
 
         <!--依赖版本-->
-        <mybatis-plus-boot-starter.version>3.4.3.2</mybatis-plus-boot-starter.version>
-        <fastjson.version>1.2.76</fastjson.version>
-        <hutool-all.version>5.7.10</hutool-all.version>
-        <sa-token.version>1.25.0</sa-token.version>
+        <mybatis-plus-boot-starter.version>3.4.3.4</mybatis-plus-boot-starter.version>
+        <fastjson.version>1.2.78</fastjson.version>
+        <hutool-all.version>5.7.14</hutool-all.version>
+        <sa-token.version>1.27.0</sa-token.version>
 
     </properties>
 
