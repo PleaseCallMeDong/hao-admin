@@ -57,9 +57,11 @@ public class StpInterfaceService implements StpInterface {
             //系统管理员，拥有最高权限
             if (userId == SysConstant.SUPER_ADMIN) {
                 List<SysMenuDO> menuList = sysMenuService.list(null);
-                permsList = new ArrayList<>(menuList.size());
+                permsList = new ArrayList<>();
                 for (SysMenuDO menu : menuList) {
-                    permsList.add(menu.getPerms());
+                    if (StrUtil.isNotBlank(menu.getPerms())) {
+                        permsList.add(menu.getPerms());
+                    }
                 }
             } else {
                 permsList = sysUserService.getBaseMapper().queryAllPerms(userId);
