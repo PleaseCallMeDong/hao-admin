@@ -47,12 +47,13 @@ public class SysUserDO extends BaseTimeDO implements Serializable {
     /**
      * 状态  0：禁用   1：正常
      */
+    @TableLogic(delval = "0", value = "1")
     private Integer status;
 
     /**
      * 角色ID列表
      */
-    @TableField(exist=false)
+    @TableField(exist = false)
     private List<Long> roleIdList;
 
 
@@ -64,7 +65,7 @@ public class SysUserDO extends BaseTimeDO implements Serializable {
     /**
      * 部门名称
      */
-    @TableField(exist=false)
+    @TableField(exist = false)
     private String deptName;
 
 }

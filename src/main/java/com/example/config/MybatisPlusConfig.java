@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @author dj
  */
 @Configuration
-@MapperScan(value = {"com.example.modules.*.dao.mysql","com.example.modules.*.*.dao.mysql"})
+@MapperScan(value = {"com.example.modules.*.dao.mysql", "com.example.modules.*.*.dao.mysql"})
 public class MybatisPlusConfig {
 
     /**

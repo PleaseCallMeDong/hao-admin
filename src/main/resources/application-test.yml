@@ -20,3 +20,11 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+jetcache:
+  # 控制台输出统计数据，统计间隔（单位分钟），0表示不统计
+  statIntervalMinutes: 1
+  remote:
+    default:
+      host: 10.0.8.50
+      port: 6379

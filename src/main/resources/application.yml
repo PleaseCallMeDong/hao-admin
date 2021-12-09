@@ -90,3 +90,26 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: true
+
+jetcache:
+  # 是否加入缓存key前缀
+  areaInCacheName: false
+  local:
+    default:
+      # 缓存类型。linkedhashmap、caffeine为当前支持的本地缓存类型
+      type: caffeine
+      # Key的转换器
+      keyConvertor: fastjson
+      limit: 1000
+  remote:
+    default:
+      # 缓存类型。tair、redis为当前支持的远程缓存
+      type: redis
+      keyConvertor: fastjson
+      # 采用Java序列化存储
+      valueEncoder: java
+      valueDecoder: java
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50

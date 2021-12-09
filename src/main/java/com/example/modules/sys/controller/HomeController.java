@@ -5,8 +5,13 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.alicp.jetcache.anno.CacheType;
+import com.alicp.jetcache.anno.Cached;
 import com.example.common.base.MyResult;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @create: 2021-07-01 15:58
  * @description:
  **/
+@Slf4j
 @RestController
 @RequestMapping("sys/home")
 public class HomeController {
@@ -23,6 +29,23 @@ public class HomeController {
         StpUtil.login(1);
         SaTokenInfo saTokenInfo = StpUtil.getTokenInfo();
         return MyResult.ok();
+    }
+
+    /**
+     * 测试缓存
+     *
+     * @return MyResult
+     * @CacheUpdate(name="userCache-", key="#user.userId", value="#user")
+     * @CacheInvalidate(name="userCache-", key="#userId")
+     */
+    @GetMapping("cacheTest")
+    @Cached(name = "HomeController.cacheTest", expire = 60, cacheType = CacheType.BOTH, localLimit = 50)
+
+    public MyResult cacheTest() {
+        val time = DateUtil.now();
+        log.info("time:{}", time);
+        //log.info("userName:{},time:{}", userName, time);
+        return MyResult.ok(time);
     }
 
     // 登录认证：只有登录之后才能进入该方法
