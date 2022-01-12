@@ -44,9 +44,9 @@ public class SysUserService extends ServiceImpl<SysUserDAO, SysUserDO> {
         QueryWrapper<SysUserDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StrUtil.isNotBlank(username), "username", username);
         Page<SysUserDO> page = this.page(new Page<>(form.getCurrent(), form.getSize()), queryWrapper);
-        for (SysUserDO SysUserDO : page.getRecords()) {
-            SysDeptDO sysDept = sysDeptService.getById(SysUserDO.getDeptId());
-            SysUserDO.setDeptName(sysDept.getName());
+        for (SysUserDO sysUserDO : page.getRecords()) {
+            SysDeptDO sysDept = sysDeptService.getById(sysUserDO.getDeptId());
+            sysUserDO.setDeptName(sysDept.getName());
         }
         return MyResult.page(page);
     }

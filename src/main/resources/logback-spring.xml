@@ -9,7 +9,8 @@
                     converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
     <!-- 彩色日志格式 -->
-    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %boldMagenta([%thread]) %green(%logger{50}) %cyan(%msg%n)"/>
 
     <!--日志格式应用spring boot默认的格式，也可以自己更改-->
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
@@ -31,7 +32,7 @@
     <springProfile name="test">
 
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <pattern>${CONSOLE_LOG_PATTERN}</pattern>
                 <charset>utf8</charset>
             </encoder>
@@ -54,7 +55,7 @@
     <springProfile name="!test">
 
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <pattern>${CONSOLE_LOG_PATTERN}</pattern>
                 <charset>utf8</charset>
             </encoder>
@@ -66,17 +67,15 @@
                 <onMatch>ACCEPT</onMatch>
                 <onMismatch>DENY</onMismatch>
             </filter>
-            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/error/error-%i.log</fileNamePattern>
                 <maxHistory>${maxHistory}</maxHistory>
                 <totalSizeCap>${totalSizeCap}</totalSizeCap>
-                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <maxFileSize>${maxFileSize}</maxFileSize>
-                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxFileSize>${maxFileSize}</maxFileSize>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
             </rollingPolicy>
-
-            <encoder>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
             </encoder>
         </appender>
@@ -87,16 +86,14 @@
                 <onMatch>ACCEPT</onMatch>
                 <onMismatch>DENY</onMismatch>
             </filter>
-            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/warn/warn-%i.log</fileNamePattern>
                 <maxHistory>${maxHistory}</maxHistory>
                 <totalSizeCap>${totalSizeCap}</totalSizeCap>
-                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <maxFileSize>${maxFileSize}</maxFileSize>
-                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxFileSize>${maxFileSize}</maxFileSize>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
             </rollingPolicy>
-            <encoder>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
             </encoder>
         </appender>
@@ -107,16 +104,14 @@
                 <onMatch>ACCEPT</onMatch>
                 <onMismatch>DENY</onMismatch>
             </filter>
-            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/info/info-%i.log</fileNamePattern>
                 <maxHistory>${maxHistory}</maxHistory>
                 <totalSizeCap>${totalSizeCap}</totalSizeCap>
-                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <maxFileSize>${maxFileSize}</maxFileSize>
-                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxFileSize>${maxFileSize}</maxFileSize>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
             </rollingPolicy>
-            <encoder>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
             </encoder>
         </appender>
@@ -127,16 +122,14 @@
                 <onMatch>ACCEPT</onMatch>
                 <onMismatch>DENY</onMismatch>
             </filter>
-            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/debug/debug-%i.log</fileNamePattern>
                 <maxHistory>${maxHistory}</maxHistory>
                 <totalSizeCap>${totalSizeCap}</totalSizeCap>
-                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <maxFileSize>${maxFileSize}</maxFileSize>
-                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxFileSize>${maxFileSize}</maxFileSize>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
             </rollingPolicy>
-            <encoder>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
             </encoder>
         </appender>
@@ -147,36 +140,73 @@
                 <onMatch>ACCEPT</onMatch>
                 <onMismatch>DENY</onMismatch>
             </filter>
-            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/trace/trace-%i.log</fileNamePattern>
                 <maxHistory>${maxHistory}</maxHistory>
                 <totalSizeCap>${totalSizeCap}</totalSizeCap>
-                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <maxFileSize>${maxFileSize}</maxFileSize>
-                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxFileSize>${maxFileSize}</maxFileSize>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
             </rollingPolicy>
-            <encoder>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - ${Content} - [%level] - [%logger{50}.%M] - %msg %n</pattern>
             </encoder>
         </appender>
 
+        <!-- 异步输出 -->
+        <appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">
+            <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+            <discardingThreshold>0</discardingThreshold>
+            <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+            <queueSize>256</queueSize>
+            <!-- 添加附加的appender,最多只能添加一个 -->
+            <appender-ref ref="ERROR"/>
+        </appender>
+
+        <appender name="ASYNC-WARN" class="ch.qos.logback.classic.AsyncAppender">
+            <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+            <discardingThreshold>0</discardingThreshold>
+            <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+            <queueSize>256</queueSize>
+            <!-- 添加附加的appender,最多只能添加一个 -->
+            <appender-ref ref="WARN"/>
+        </appender>
+
+        <appender name="ASYNC-INFO" class="ch.qos.logback.classic.AsyncAppender">
+            <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+            <discardingThreshold>0</discardingThreshold>
+            <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+            <queueSize>256</queueSize>
+            <!-- 添加附加的appender,最多只能添加一个 -->
+            <appender-ref ref="INFO"/>
+        </appender>
+
+        <appender name="ASYNC-DEBUG" class="ch.qos.logback.classic.AsyncAppender">
+            <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+            <discardingThreshold>0</discardingThreshold>
+            <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+            <queueSize>256</queueSize>
+            <!-- 添加附加的appender,最多只能添加一个 -->
+            <appender-ref ref="DEBUG"/>
+        </appender>
+
+        <appender name="ASYNC-TRACE" class="ch.qos.logback.classic.AsyncAppender">
+            <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+            <discardingThreshold>0</discardingThreshold>
+            <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+            <queueSize>256</queueSize>
+            <!-- 添加附加的appender,最多只能添加一个 -->
+            <appender-ref ref="TRACE"/>
+        </appender>
+
         <logger name="HikariPool-1 connection adder" level="ERROR"/>
-        <logger name="org.apache.http" level="ERROR"/>
-        <logger name="com.zaxxer.hikari.pool.HikariPool" level="ERROR"/>
-        <logger name="com.datastax.driver.core.Connection" level="ERROR"/>
-        <logger name="org.springframework" level="INFO"/>
-        <logger name="o.s.web.servlet.PageNotFound" level="WARN"/>
-        <logger name="okhttp3.OkHttpClient" level="WARN"/>
-        <!--        <logger name="io.tdr.dataParser" level="INFO"/>-->
 
         <root level="INFO">
             <appender-ref ref="STDOUT"/>
-            <appender-ref ref="ERROR"/>
-            <appender-ref ref="INFO"/>
-            <appender-ref ref="WARN"/>
-            <appender-ref ref="DEBUG"/>
-            <appender-ref ref="TRACE"/>
+            <appender-ref ref="ASYNC-ERROR"/>
+            <appender-ref ref="ASYNC-WARN"/>
+            <appender-ref ref="ASYNC-INFO"/>
+            <appender-ref ref="ASYNC-DEBUG"/>
+            <appender-ref ref="ASYNC-TRACE"/>
         </root>
 
     </springProfile>

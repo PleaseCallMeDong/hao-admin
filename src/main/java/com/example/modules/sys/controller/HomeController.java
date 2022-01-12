@@ -9,6 +9,7 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
+import com.example.common.annotation.Limiter;
 import com.example.common.base.MyResult;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -40,7 +41,6 @@ public class HomeController {
      */
     @GetMapping("cacheTest")
     @Cached(name = "HomeController.cacheTest", expire = 60, cacheType = CacheType.BOTH, localLimit = 50)
-
     public MyResult cacheTest() {
         val time = DateUtil.now();
         log.info("time:{}", time);
@@ -69,6 +69,8 @@ public class HomeController {
         return MyResult.ok();
     }
 
+    //限流
+    @Limiter(value = 50, timeout = 300)
     @PostMapping("test2")
     public MyResult test2(@RequestBody Object o) {
         String data = JSONObject.toJSONString(o);

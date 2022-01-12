@@ -15,9 +15,11 @@ import java.io.IOException;
 @WebFilter(urlPatterns = "/*")
 public class XssFilter implements Filter {
 
+    @Override
     public void init(FilterConfig config) {
     }
 
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper(
