@@ -28,11 +28,6 @@ public class SysLogDO implements Serializable {
 	private String userId;
 
 	/**
-	 * 用户名
-	 */
-	private String username;
-
-	/**
 	 * 用户操作
 	 */
 	private String operation;

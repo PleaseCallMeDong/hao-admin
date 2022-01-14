@@ -1,5 +1,6 @@
 package com.example.common.aspect;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.alibaba.fastjson.JSON;
 import com.example.common.annotation.SysLog;
 import com.example.common.utils.HttpContextUtils;
@@ -82,12 +83,8 @@ public class SysLogAspect {
         //设置IP地址
         sysLog.setIp(MyIPUtil.getIpAddr(request));
 
-        //用户名
-        SysUserDO user = null;
-        if (null != user) {
-            sysLog.setUsername(user.getUsername());
-            sysLog.setUserId(user.getUserId() + "");
-        }
+        sysLog.setUserId(StpUtil.getLoginIdAsString());
+
         sysLog.setRunTime(time);
         sysLog.setCreateDate(new Date());
         //保存系统日志

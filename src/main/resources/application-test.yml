@@ -28,3 +28,4 @@ jetcache:
     default:
       host: 10.0.8.50
       port: 6379
+      database: 9
