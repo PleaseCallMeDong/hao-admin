@@ -1,6 +1,7 @@
 package com.example.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * @author dj
  */
 @Configuration
-@MapperScan(value = {"com.example.modules.*.dao.mysql", "com.example.modules.*.*.dao.mysql"})
+@MapperScan(value = {"com.example.modules.*"}, markerInterface = BaseMapper.class)
 public class MybatisPlusConfig {
 
     /**

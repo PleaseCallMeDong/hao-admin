@@ -18,48 +18,53 @@ import java.util.Date;
 @Document("sys_log")
 public class SysLogDO implements Serializable {
 
-	@Id
-	@JSONField(name = "_id")
-	private String id;
+    @Id
+    @JSONField(name = "_id")
+    private String id;
 
-	/**
-	 * 用户id
-	 */
-	private String userId;
+    /**
+     * 用户id
+     */
+    private String userId;
 
-	/**
-	 * 用户操作
-	 */
-	private String operation;
+    /**
+     * 用户操作
+     */
+    private String operation;
 
-	/**
-	 * 请求方法
-	 */
-	private String method;
+    /**
+     * 请求方法
+     */
+    private String method;
 
-	/**
-	 * 请求参数
-	 */
-	private String params;
+    /**
+     * 请求路径
+     */
+    private String requestUrl;
 
-	/**
-	 * 执行时长(毫秒)
-	 */
-	private Long runTime;
+    /**
+     * 请求参数
+     */
+    private String params;
 
-	/**
-	 * IP地址
-	 */
-	private String ip;
+    /**
+     * 执行时长(毫秒)
+     */
+    private Long runTime;
 
-	/**
-	 * 创建时间
-	 */
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	private Date createDate;
+    /**
+     * IP地址
+     */
+    private String ip;
 
-	public SysLogDO() {
-		this.createDate = new Date();
-	}
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createDate;
+
+    public SysLogDO() {
+        this.createDate = new Date();
+    }
 
 }

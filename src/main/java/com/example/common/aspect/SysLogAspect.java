@@ -1,6 +1,7 @@
 package com.example.common.aspect;
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.example.common.annotation.SysLog;
 import com.example.common.utils.HttpContextUtils;
@@ -14,6 +15,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -30,6 +32,9 @@ import java.util.Date;
 @Aspect
 @Component
 public class SysLogAspect {
+
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
 
     @Resource
     private SysLogDAO sysLogDAO;
@@ -82,6 +87,9 @@ public class SysLogAspect {
         HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
         //设置IP地址
         sysLog.setIp(MyIPUtil.getIpAddr(request));
+        //获取requestUrl
+        String requestUrl = request.getRequestURL().toString();
+        requestUrl = StrUtil.subAfter(requestUrl, contextPath, true);
 
         sysLog.setUserId(StpUtil.getLoginIdAsString());
 
